@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <script id="template" type="text/ractive">
+      <div class="tred">
+        {{#root}}
+          {{>sexp}}
+        {{/root}}
+
+        {{#partial sexp}}
+          {{#if .map}}
+            <div class="sexp">
+              {{ #. }}{{>sexp}}{{/}}
+            </div>
+          {{else}}
+            <pre class="atom" contenteditable="true" value="{{.}}"></pre>
+          {{/if}}
+        {{/partial}}
+      </div>
+ 
+      <pre>{{ debug }}</pre>
+    </script>
+    <script src="ractive-0.9.0.88.js"></script>
+
+    <style type="text/css">
+      .atom {
+        margin-left: 0.75em;
+        border: 1px solid white;
+        display: inline-block;
+      }
+
+      .atom:first-child {
+        margin-left: 0px;
+      }
+
+      .atom:hover {
+        border: 1px solid red;
+      }
+
+      .sexp {
+        background-color: #FFF;
+        display: inline-block;
+        border: 1px solid black;
+        padding: 2px;
+        margin: 2px;
+        margin-left: 0.75em;
+      }
+
+      .sexp:hover {
+        background-color: #FF9;
+      }
+    </style>
+  </head>
+  <body>
+
+    <script src="tred.js"></script>
+  </body>
+</html>
+
