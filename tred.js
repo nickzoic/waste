@@ -29,6 +29,7 @@
   });
 
   ractive.observe('root.**', function (nv, ov, kp) {
+    console.log(nv, ov, kp);
     if (!nv) {
       var keys = Ractive.splitKeypath(kp);
       var childNumber = 1 * keys.pop();
@@ -61,7 +62,7 @@
         }
       }
       console.log(focusOffset+"["+before+"|"+after+"]");
-      var keys = Ractive.splitKeypath(Ractive.getNodeInfo(ev.srcElement).getBindingPath());
+      var keys = Ractive.splitKeypath(ractive.getContext(ev.target).getBindingPath());
       var childNumber = 1 * keys.pop();
       var parentKeyPath = Ractive.joinKeys.apply(this, keys);
       ractive.splice(parentKeyPath, childNumber, 1, before, after);

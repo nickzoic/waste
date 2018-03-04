@@ -21,17 +21,17 @@
             <table class="object">
               {{#this:_}}
 		<tr>
-		  <th contendeditable="true">{{@key}}</th>
+		  <th>{{@key}}</th>
 		  <td>{{>value}}</td>
                 </tr>
               {{/}}
             </table>
           {{elseif typeof this == 'number'}}
-	    <div class="number" contenteditable="true">{{this}}</div>
+	    <div class="number" contenteditable="true" value="{{.}}"></div>
           {{elseif this === true || this === false || this === null}}
 	    <div class="{{ ""+this }}">{{ ""+this }}</div>
           {{else}}
-	    <div class="string" contenteditable="true">{{ this }}</div>
+	    <div class="string" contenteditable="true" value="{{.}}"></div>
           {{/if}}
         {{/partial}}
       </div>
