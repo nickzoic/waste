@@ -1,18 +1,37 @@
 <html>
-  <head>
+  <head> 
+    <meta charset="UTF-8">
     <script id="template" type="text/ractive">
       <div class="tred">
         {{#root}}
-          {{>sexp}}
+          {{>value}}
         {{/root}}
 
-        {{#partial sexp}}
-          {{#if .map}}
-            <div class="sexp">
-              {{ #. }}{{>sexp}}{{/}}
-            </div>
+        {{#partial value}}
+          {{#if Array.isArray(this)}}
+            <table class="array">
+              {{#.}}
+		<tr>
+		  <th>{{@index}}</th>
+		  <td>{{>value}}</td>
+                </tr>
+              {{/}}
+            </table>
+          {{elseif this instanceof Object}}
+            <table class="object">
+              {{#this:_}}
+		<tr>
+		  <th>{{@key}}</th>
+		  <td>{{>value}}</td>
+                </tr>
+              {{/}}
+            </table>
+          {{elseif typeof this == 'number'}}
+	    <div class="number">{{this}}</div>
+          {{elseif this === true || this === false || this === null}}
+	    <div class="{{ ""+this }}">{{ ""+this }}</div>
           {{else}}
-            <pre class="atom" contenteditable="true" value="{{.}}"></pre>
+	    <div class="string">{{ this }}</div>
           {{/if}}
         {{/partial}}
       </div>
@@ -22,31 +41,26 @@
     <script src="https://cdn.jsdelivr.net/npm/ractive"></script>
 
     <style type="text/css">
-      .atom {
-        margin-left: 0.75em;
-        border: 1px solid white;
-        display: inline-block;
+      table.array {
+	border: 1px solid blue;
       }
-
-      .atom:first-child {
-        margin-left: 0px;
+      table.array > tr > th {
+	color: blue;
       }
-
-      .atom:hover {
-        border: 1px solid red;
+      table.object {
+	border: 1px solid red;
       }
-
-      .sexp {
-        background-color: #FFF;
-        display: inline-block;
-        border: 1px solid black;
-        padding: 2px;
-        margin: 2px;
-        margin-left: 0.75em;
+      table.object > tr > th {
+	color: red;
       }
-
-      .sexp:hover {
-        background-color: #FF9;
+      .number {
+	color: purple;
+      }
+      .true, .false, .null {
+	color: green;
+      }
+      th {
+	vertical-align: top;
       }
     </style>
   </head>

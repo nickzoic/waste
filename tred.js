@@ -3,17 +3,18 @@
     return Ractive.joinKeys.apply(this, Ractive.splitKeypath(kp).reverse().slice(1).reverse());
   }
 
-  // example from SICP 
-  var sexp1 = [ 'define', [ 'smallest-divisor', 'n' ], [ 'find-divisor', 'n', '2' ] ];
-  var sexp2 = [ 'define', [ 'find-divisor', 'n', 'test-divisor' ], [ 'cond', [ [ '>',
-	         [ 'square', 'test-divisor' ], 'n'], 'n'], [ [ 'divides?', 'test-divisor', 'n' ],
-			 'test-divisor'], [ 'else', [ 'find-divisor', 'n', [ '+', 'test-divisor', '1' ]]]]];
-  var sexp3 = [ 'define', ['divides?', 'a', 'b' ], [ '=', [ 'remainder', 'b', 'a' ], '0' ]];
-  var sexp4 = [ 'definxxxe', ['prime?', 'n'], [ '=', 'n', [ 'smallest-divisor', 'n' ]]];
-       
+  var example = {
+    "title": "example JSON document",
+    "array": [ "this", "is", "an", "array" ],
+    "object": { "objects": "look", "like": "this", "and": [ "they", "can", "nest" ] },
+    "number": 42,
+    "not a number": "42",
+    "special stuff": [ true, false, null ]
+  };
+
   var ractive = new Ractive({
     data: {
-      root: [ sexp1, sexp2, sexp3, sexp4 ],
+      root: example,
       debug: ""
     },
     template: "#template",
