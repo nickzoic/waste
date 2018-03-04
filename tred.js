@@ -11,20 +11,21 @@
     "not a number": "42",
     "special stuff": [ true, false, null ]
   };
+  var json_doc = JSON.parse(document.getElementById("root").innerText);
 
   var ractive = new Ractive({
     data: {
-      root: example,
-      debug: ""
+      root: json_doc,
     },
     template: "#template",
-    el: document.body
+    el: "#root"
   });
 
   // the ** is a recursive matcher as introduced in ractive 0.9.0-edge or thereabouts.
- 
+  // currently released versions seem to be fine.
+
   ractive.observe('root', function (nv, ov, kp) {
-    ractive.set('debug', JSON.stringify(nv));
+    document.getElementById("debug").innerText = JSON.stringify(nv, null, 2);
   });
 
   ractive.observe('root.**', function (nv, ov, kp) {
