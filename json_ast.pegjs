@@ -1,4 +1,13 @@
 /*
+ * JSON AST Parser Grammar
+ * =======================
+ *
+ * Based very heavily on that found in pegjs's examples/json.pegjs
+ * Modified so that instead of returning native Javascript objects
+ * it returns nodes for an AST.  This resolves problems which would otherwise
+ * arise with ill-defined concepts such as key order, duplicate keys,
+ * numeric precision, etc as documented in RFC 7159 [1].
+ *
  * JSON Grammar
  * ============
  *
