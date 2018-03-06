@@ -1,0 +1,23 @@
+{
+	"name": "tred",
+	"version": "0.0.1",
+	"author": {
+		"name": "Nick Moore",
+		"email": "nick@zoic.org",
+		"url": "http://nick.zoic.org/"
+	},
+	"homepage": "https://nickzoic.github.io/tred/",
+	"description": "An in-browser syntax tree editor",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/nickzoic/tred"
+	},
+	"license":  "MIT",
+	"dependencies": {
+		"ractive": "0.9.13"
+	},
+	"devDependencies": {
+		"pegjs": "0.10.0",
+		"browserify": "16.1.0"
+	}
+}
