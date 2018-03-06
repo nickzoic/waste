@@ -40,9 +40,9 @@ value
   / number
   / string
 
-false = "false" { return false; }
-null  = "null"  { return null;  }
-true  = "true"  { return true;  }
+false = "false" { return { type: "atom", value: "false" }; }
+null  = "null"  { return { type: "atom", value: "null" };  }
+true  = "true"  { return { type: "atom", value: "true" };  }
 
 /* ----- 4. Objects ----- */
 
@@ -52,12 +52,10 @@ object
       head:member
       tail:(value_separator m:member { return m; })*
       {
-        var result = {}, i;
+        var result = { "type": "object", value: [ head ] };
 
-        result[head.name] = head.value;
-
-        for (i = 0; i < tail.length; i++) {
-          result[tail[i].name] = tail[i].value;
+        for (var i = 0; i < tail.length; i++) {
+          result.value.push(tail[i]);
         }
 
         return result;
@@ -68,7 +66,7 @@ object
 
 member
   = name:string name_separator value:value {
-      return { name: name, value: value };
+      return [ name, value ];
     }
 
 /* ----- 5. Arrays ----- */
@@ -81,12 +79,12 @@ array
       { return [head].concat(tail); }
     )?
     end_array
-    { return values !== null ? values : []; }
+    { return { type: "array", value: values !== null ? values : [] }; }
 
 /* ----- 6. Numbers ----- */
 
 number "number"
-  = minus? int frac? exp? { return parseFloat(text()); }
+  = minus? int frac? exp? { return { type: "number", value: text() }; }
 
 decimal_point = "."
 digit1_9      = [1-9]
@@ -101,7 +99,7 @@ zero          = "0"
 /* ----- 7. Strings ----- */
 
 string "string"
-  = quotation_mark chars:char* quotation_mark { return chars.join(""); }
+  = quotation_mark chars:char* quotation_mark { return { type: "string", value: chars.join("")}; }
 
 char
   = unescaped
