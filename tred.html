@@ -4,34 +4,30 @@
     <script id="template" type="text/ractive">
       <div class="tred">
         {{#root}}
-          {{>value}}
+          {{>thing}}
         {{/root}}
 
-        {{#partial value}}
-          {{#if Array.isArray(this)}}
+        {{#partial thing}}
+          {{#if type == 'array'}}
             <table class="array">
-              {{#.}}
+              {{#value}}
 		<tr>
 		  <th>{{@index}}</th>
-		  <td>{{>value}}</td>
+		  <td>{{>thing}}</td>
                 </tr>
               {{/}}
             </table>
-          {{elseif this instanceof Object}}
+          {{elseif type == 'object'}}
             <table class="object">
-              {{#this:_}}
+              {{#value}}
 		<tr>
-		  <th>{{@key}}</th>
-		  <td>{{>value}}</td>
+		  {{#this.0}}<th>{{>thing}}</th>{{/}}
+		  {{#this.1}}<td>{{>thing}}</td>{{/}}
                 </tr>
               {{/}}
             </table>
-          {{elseif typeof this == 'number'}}
-	    <div class="number" contenteditable="true" value="{{.}}"></div>
-          {{elseif this === true || this === false || this === null}}
-	    <div class="{{ ""+this }}">{{ ""+this }}</div>
           {{else}}
-	    <div class="string" contenteditable="true" value="{{.}}"></div>
+	    <div class="{{ type }}" contenteditable="true" value="{{value}}"></div>
           {{/if}}
         {{/partial}}
       </div>
@@ -54,7 +50,7 @@
       .number {
 	color: purple;
       }
-      .true, .false, .null {
+      .atom {
 	color: green;
       }
       th {
@@ -80,7 +76,7 @@
     {
        "title": "example JSON document",
        "array": [ "this", "is", "an", "array" ],
-       "object": { "objects": "look", "like": "this", "and": [ "they", "can", "nest" ] },
+       "object": { "objects": "look", "like": "this", "and": [ "they", "can", { "nest": [ "deeper", { "and": "deeper" } ] } ] },
        "number": 42,
        "not a number": "42",
        "special stuff": [ true, false, null ]
@@ -89,22 +85,25 @@
 
     <p>
         The document is manipulated as a tree of JS objects which mirrors the tree of DOM
-	objects. This is what it looks like serialized out as JSON again:
+	objects:
     </p>
     <pre id="debug"></pre>
     <p>
         Note that the template and stylesheet in this document are the only things which
-	make tred specific to JSON.  JSON is a bit unusual in that the documents map directly
-	on to Javascript data structures, but other document types can be parsed &amp;
+	make tred specific to JSON.  Rather than mapping the AST directly into Javascript
+	objects, we use a more abstract representation because Javascript types aren't
+	exactly the same as JSON types, despite what the name suggests.
+	Other document types can be parsed &amp;
 	serialized ... I'd like to develop it for other languages / markups
 	too.
     </p>
+    <pre id="output"></pre>
     <p>
       See <a href="https://github.com/nickzoic/tred/">The github repo</a>
       and my article "<a href="http://nick.zoic.org/art/syntax-tree-editor/">Syntax Tree Editors</a>"
       for more information.
     </p>
-    <script src="tred.js"></script>
+    <script src="index.js"></script>
   </body>
 </html>
 

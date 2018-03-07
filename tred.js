@@ -3,19 +3,28 @@
     return Ractive.joinKeys.apply(this, Ractive.splitKeypath(kp).reverse().slice(1).reverse());
   }
 
-  var example = {
-    "title": "example JSON document",
-    "array": [ "this", "is", "an", "array" ],
-    "object": { "objects": "look", "like": "this", "and": [ "they", "can", "nest" ] },
-    "number": 42,
-    "not a number": "42",
-    "special stuff": [ true, false, null ]
-  };
-  var json_doc = JSON.parse(document.getElementById("root").innerText);
+  // serializer for JSON ... this should really be built into the AST nodes, eg: give them
+  // each a toString method which knows how to serialize themselves.  
+
+  function enstringulate(x) {
+    var r = "";
+    if (x.type == 'object') {
+      return '{' + x.value.map(function (y) { return y.map(enstringulate).join(':') }).join(',') + '}';
+    } else if (x.type == 'array') {
+      return '[' + x.value.map(enstringulate).join(',') + ']';
+    } else if (x.type == 'string') {
+      return JSON.stringify(x.value);
+    } else { 
+      return x.value;
+    }
+  }
+
+  var json_ast_parser = require('./json_ast');
+  var json_ast = json_ast_parser.parse(document.getElementById("root").innerText);
 
   var ractive = new Ractive({
     data: {
-      root: json_doc,
+      root: json_ast,
     },
     template: "#template",
     el: "#root"
@@ -25,7 +34,8 @@
   // currently released versions seem to be fine.
 
   ractive.observe('root', function (nv, ov, kp) {
-    document.getElementById("debug").innerText = JSON.stringify(nv, null, 2);
+    document.getElementById("debug").innerText = JSON.stringify(nv);
+    document.getElementById("output").innerText = enstringulate(nv);
   });
 
   ractive.observe('root.**', function (nv, ov, kp) {
