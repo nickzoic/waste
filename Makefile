@@ -11,7 +11,7 @@ node_modules: package.json
 json_ast.js: json_ast.pegjs
 	${PEGJS} -o $@ $<
 
-index.js: tred.js json_ast.js
+index.js: waste.js json_ast.js
 	${BROWSERIFY} -o $@ $<
 
 clean:

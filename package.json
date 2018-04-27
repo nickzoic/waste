@@ -1,16 +1,16 @@
 {
-	"name": "tred",
+	"name": "waste",
 	"version": "0.0.1",
 	"author": {
 		"name": "Nick Moore",
 		"email": "nick@zoic.org",
 		"url": "http://nick.zoic.org/"
 	},
-	"homepage": "https://nickzoic.github.io/tred/",
-	"description": "An in-browser syntax tree editor",
+	"homepage": "https://nickzoic.github.io/waste/",
+	"description": "Web Abstract Syntax Tree Editor",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/nickzoic/tred"
+		"url": "https://github.com/nickzoic/waste"
 	},
 	"license":  "MIT",
 	"dependencies": {

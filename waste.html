@@ -2,7 +2,7 @@
   <head> 
     <meta charset="UTF-8">
     <script id="template" type="text/ractive">
-      <div class="tred">
+      <div class="waste">
         {{#root}}
           {{>thing}}
         {{/root}}
@@ -62,14 +62,14 @@
     </style>
   </head>
   <body>
-    <h1>"tred" JSON example ...</h1>
+    <h1>"WASTE" JSON example ...</h1>
     <p>
         At the moment, all this is doing is translating the template context (JSON) into 
         a pretty DOM-tree format. What it needs next is more mouse and key bindings to let you
         manipulate the document ...
     </p><p>
-        Note that you can't edit keys or indexes or special values
-	like "true", "false" and "null", and that numbers become strings when you edit them.
+        Note that you can't edit indexes and editing special values
+	like "true", "false" and "null" and numbers is a bit fraught.
 	Some more work needed I think!
     </p>
     <div id="root"><pre>
@@ -90,7 +90,7 @@
     <pre id="debug"></pre>
     <p>
         Note that the template and stylesheet in this document are the only things which
-	make tred specific to JSON.  Rather than mapping the AST directly into Javascript
+	make WASTE specific to JSON.  Rather than mapping the AST directly into Javascript
 	objects, we use a more abstract representation because Javascript types aren't
 	exactly the same as JSON types, despite what the name suggests.
 	Other document types can be parsed &amp;
@@ -99,7 +99,7 @@
     </p>
     <pre id="output"></pre>
     <p>
-      See <a href="https://github.com/nickzoic/tred/">The github repo</a>
+      See <a href="https://github.com/nickzoic/waste/">The github repo</a>
       and my article "<a href="http://nick.zoic.org/art/syntax-tree-editor/">Syntax Tree Editors</a>"
       for more information.
     </p>
